@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="net.inno.modules.dao.IndustryMapper">
+<insert id="insert" parameterType="Industry"   keyProperty="industryId" useGeneratedKeys="true">
+INSERT INTO sv_industry
+	(
+	`parentId`,
+	`name`,
+	`pos`
+	)
+VALUES
+	(
+	#{parentId},
+	#{name},
+	#{pos}
+	)
+</insert>
+
+<delete id="delete" parameterType="long">
+DELETE FROM sv_industry WHERE industryId = #{industryId}
+</delete>
+
+<delete id="deleteByParentId" parameterType="long">
+DELETE FROM sv_industry WHERE parentId = #{industryId}
+</delete>
+
+<update id="update" parameterType="Industry">
+UPDATE sv_industry SET 
+	`parentId` = #{parentId},
+	`name` = #{name},
+	`pos` = #{pos} 
+WHERE 
+	industryId = #{industryId}
+</update>
+
+<update id="edit" parameterType="Industry">
+UPDATE sv_industry SET 
+	`name` = #{name},
+	`pos` = #{pos} 
+WHERE 
+	industryId = #{industryId}
+</update>
+
+<select id="get" resultType="Industry" parameterType="long">
+	SELECT * FROM sv_industry WHERE industryId = #{industryId}
+</select>
+
+<select id="find" resultType="Industry" parameterType="Industry">
+	SELECT * FROM sv_industry where 1=1 
+	<if test="industryId != -1">
+		 AND `industryId` = #{industryId}
+	</if>
+	<if test="parentId != -1">
+		 AND `parentId` = #{parentId}
+	</if>
+	<if test="name != null">
+		 AND `name` like #{name}
+	</if>
+	<if test="pos != -1">
+		 AND `pos` = #{pos}
+	</if>
+</select>
+
+<select id="search" resultType="Industry" parameterType="ListCondition">
+	SELECT <if test="distinct">distinct</if> * FROM sv_industry
+	<if test="_parameter != null">
+		<include refid="Where_ListCondition"/>
+	</if>
+	<if test="orderSql != null">order by ${orderSql}</if>
+</select>
+
+<select id="count" resultType="java.lang.Integer" parameterType="ListCondition">
+	SELECT count(*) FROM sv_industry
+	<if test="_parameter != null">
+		<include refid="Where_ListCondition"/>
+	</if>
+</select>
+
+<sql id="Where_ListCondition">
+	<where>
+		<foreach collection="listSql" item="value">
+			${value}
+		</foreach>
+	</where>
+</sql>
+
+<select id="getByParentId" resultType="Industry" parameterType="long">
+	SELECT *
+	FROM sv_industry
+	WHERE parentId = #{industryId}
+	ORDER BY pos DESC
+</select>
+
+<select id="isExist" resultType="boolean" parameterType="java.lang.String">
+	SELECT COUNT(industryId) > 0
+	FROM sv_industry
+	WHERE name LIKE #{name}
+</select>
+
+</mapper>

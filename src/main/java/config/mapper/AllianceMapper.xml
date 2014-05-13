@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="net.inno.modules.dao.AllianceMapper">
+<insert id="insert" parameterType="Alliance"   keyProperty="allianceId" useGeneratedKeys="true">
+INSERT INTO sv_alliance
+	(
+	`industryId`,
+	`login_id`,
+	`areaId`,
+	`stree`,
+	`name`,
+	`website`,
+	`scale`,
+	`contact`,
+	`mainProduct`,
+	`cost`,
+	`crafts`,
+	`quality`,
+	`delivery`,
+	`yield`,
+	`description`
+	)
+VALUES
+	(
+	#{industryId},
+	#{login_id},
+	#{areaId},
+	#{stree},
+	#{name},
+	#{website},
+	#{scale},
+	#{contact},
+	#{mainProduct},
+	#{cost},
+	#{crafts},
+	#{quality},
+	#{delivery},
+	#{yield},
+	#{description}
+	)
+</insert>
+
+<delete id="delete" parameterType="long">
+DELETE FROM sv_alliance WHERE allianceId = #{allianceId}
+</delete>
+
+<update id="update" parameterType="Alliance">
+UPDATE sv_alliance SET 
+	`industryId` = #{industryId},
+	`login_id` = #{login_id},
+	`areaId` = #{areaId},
+	`stree` = #{stree},
+	`name` = #{name},
+	`website` = #{website},
+	`scale` = #{scale},
+	`contact` = #{contact},
+	`mainProduct` = #{mainProduct},
+	`cost` = #{cost},
+	`crafts` = #{crafts},
+	`quality` = #{quality},
+	`delivery` = #{delivery},
+	`yield` = #{yield},
+	`description` = #{description} 
+WHERE 
+	allianceId = #{allianceId}
+</update>
+
+<select id="get" resultType="Alliance" parameterType="long">
+	SELECT * FROM sv_alliance WHERE allianceId = #{allianceId}
+</select>
+
+<select id="getByLogin_id" resultType="Alliance" parameterType="java.lang.String">
+	SELECT * FROM sv_alliance WHERE login_id = #{login_id}
+</select>
+
+<select id="find" resultType="Alliance" parameterType="Alliance">
+	SELECT * FROM sv_alliance where 1=1 
+	<if test="allianceId != -1">
+		 AND `allianceId` = #{allianceId}
+	</if>
+	<if test="industryId != -1">
+		 AND `industryId` = #{industryId}
+	</if>
+	<if test="areaId != -1">
+		 AND `areaId` = #{areaId}
+	</if>
+	<if test="stree != null">
+		 AND `stree` like #{stree}
+	</if>
+	<if test="name != null">
+		 AND `name` like #{name}
+	</if>
+	<if test="website != null">
+		 AND `website` like #{website}
+	</if>
+	<if test="scale != null">
+		 AND `scale` like #{scale}
+	</if>
+	<if test="contact != null">
+		 AND `contact` like #{contact}
+	</if>
+	<if test="mainProduct != null">
+		 AND `mainProduct` like #{mainProduct}
+	</if>
+	<if test="cost != -1">
+		 AND `cost` = #{cost}
+	</if>
+	<if test="crafts != -1">
+		 AND `crafts` = #{crafts}
+	</if>
+	<if test="quality != -1">
+		 AND `quality` = #{quality}
+	</if>
+	<if test="delivery != -1">
+		 AND `delivery` = #{delivery}
+	</if>
+	<if test="yield != -1">
+		 AND `yield` = #{yield}
+	</if>
+	<if test="description != null">
+		 AND `description` like #{description}
+	</if>
+</select>
+
+<select id="search" resultType="Alliance" parameterType="ListCondition">
+	SELECT <if test="distinct">distinct</if> * FROM sv_alliance
+	<if test="_parameter != null">
+		<include refid="Where_ListCondition"/>
+	</if>
+	<if test="orderSql != null">order by ${orderSql}</if>
+</select>
+
+<select id="count" resultType="java.lang.Integer" parameterType="ListCondition">
+	SELECT count(*) FROM sv_alliance
+	<if test="_parameter != null">
+		<include refid="Where_ListCondition"/>
+	</if>
+</select>
+
+<sql id="Where_ListCondition">
+	<where>
+		<foreach collection="listSql" item="value">
+			${value}
+		</foreach>
+	</where>
+</sql>
+
+<select id="getList" resultType="Alliance" parameterType="Alliance">
+	SELECT * FROM sv_alliance
+</select>
+
+</mapper>

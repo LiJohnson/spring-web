@@ -1,0 +1,146 @@
+.modal-header{cursor: move;}
+
+.col-md-2 > .add{width:100%;}
+.nav .add , .nav .edit,.nav .delete{float:right;}
+.nav{margin-left:10px; }
+div[left-nav] .nav li [html-title]{border-left: 1px solid rgb(233, 233, 233);}
+div[left-nav] .nav li.active > [html-title], div[left-nav] .nav li:hover > [html-title]{border-left: 1px solid gray;}
+div[left-nav] .nav li.active > span , div[left-nav] .nav li:hover > span{background:rgba(119, 119, 119, 0.16);}
+div[left-nav] li.active > .nav{display:block;}
+div[left-nav] li > .nav{display:none;}
+.to:after {
+	position: absolute;
+	content: '=>';
+	right: -10px;
+	top: 20%;
+}
+[data-answer-item] .close,[data-other-item] .close{
+	margin-top: 8px;
+	float: left;
+}
+
+.nav li{cursor: pointer;}
+
+div[right-question]{border-left: 1px solid rgb(235, 235, 235);}
+
+
+.survey-header{text-align: center;background: rgb(228, 228, 228);-webkit-filter: blur(1px);-webkit-filter: blur(1px);-moz-filter: blur(1px);;}
+.survey-header span{margin-right: 30px;}
+.survey-header .survey-name{float: right;font-size: 20px;}
+
+.survey-title {padding-bottom: 9px;margin: 40px 0 20px;}
+h1.survey-title {border-bottom: 1px solid #eee;}
+.survey-title .error{color:#8a6d3b;margin-left: 15px;text-shadow:rgb(255, 191, 0) 0px 0px 26px;font-size: calc(80%);}
+
+.survey-sidebar{overflow: hidden;}
+.survey-sidebar  .nav>li>a {display: block;font-size: 13px;font-weight: 500;color: #999;padding: 4px 20px;}
+.survey-sidebar li>ul.nav{display: none;}
+.survey-sidebar li.active>ul.nav{display: block;}
+
+.survey-sidebar li.active > a {border-left: 1px solid gray;padding-left: 18px;color:  #6F6F6F;border-left: 2px solid  #C0C0C0;}
+.survey-sidebar li > a {border-left: 1px solid #FFF;}
+.survey-sidebar li > a:hover {border-left: 1px solid  #C0C0C0;}
+.survey-sidebar li.active > a:hover {border-left: 2px solid  #C0C0C0;}
+
+.survey-body{    background: rgb(250, 250, 250);}
+
+.survey-contain{border-left: 1px dotted rgb(211, 211, 211)}
+
+.survey-question .answer{min-height: 50px;margin-left: 20px;}
+.survey-question .answer.error input{background: #FFE9E8;border-color: #a94442;-webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.075);box-shadow: inset 0 1px 1px rgba(0,0,0,.075);}
+
+.survey-process .survey-next{float:right;}
+.survey-process .survey-last{float:left;}
+
+.survey-hide-child > .survey-question{display: none;}
+
+.servey-top{position: fixed;bottom: 10px;right:10px;}
+.survey-submit:last-child{position: fixed;bottom: 50px;right: 10px;}
+
+.survey-ok .alert-warning{margin-top:25%;}
+
+.survey-chart-controller {
+	opacity: 0.5;
+    width: 50px;
+    height: 50px;
+    background: rgb(63, 63, 63);
+    position:relative;
+}
+.survey-chart-controller:hover {
+	opacity: 0.8;
+}
+
+.survey-chart-controller div{ 
+    position:absolute;
+    left:37.5%;
+    top:37.5%;
+    width:25%;
+    height:25%;
+    background: rgb(189, 189, 189);
+    cursor: pointer;
+}
+.survey-chart-controller div:hover{
+    left:35%;
+    top:35%;
+    width:30%;
+    height:30%;
+}
+.survey-chart-controller {
+    width: 50px;
+    height: 50px;
+    background: rgb(63, 63, 63);
+    position:relative;
+}
+
+.survey-chart-controller,.survey-chart-controller div{
+    border-radius: 50%;
+    
+}
+
+@media (min-width:992px) {
+	.survey-sidebar.fixed{position: fixed;top:10px;}
+	.survey-foot{height: 1000px;}
+}
+
+.survey-loading {margin-top: 10%;}
+.survey-loading .survey-loading-text{color: rgb(165, 165, 165);position: absolute;left: 50%;top: 5px;}
+.survey-loading .progress{height: 30px;}
+.survey-loading .progress.active .progress-bar{ 
+	background-color:#D6D6D6;
+	-webkit-animation:loadingAnimate 8s linear infinite;
+	-moz-animation   :loadingAnimate 8s linear infinite;
+		-ms-animation:loadingAnimate 8s linear infinite;
+		-o-animation :loadingAnimate 8s linear infinite;
+			animation:loadingAnimate 8s linear infinite;
+}
+
+@-webkit-keyframes loadingAnimate {
+	from {width:0;background-position: 200px 0;}
+	50% {width:100%}
+	to {width:0;background-position: 0 0}
+}
+
+@-o-keyframes loadingAnimate {
+	from {width:0;background-position: 200px 0;}
+	50% {width:100%}
+	to {width:0;background-position: 0 0;}
+}
+
+@-moz-keyframes loadingAnimate {
+	from {width:0;background-position: 200px 0;}
+	50% {width:100%}
+	to {width:0;background-position: 0 0;}
+}
+
+@-ms-keyframes loadingAnimate {
+	from {width:0;background-position: 200px 0;}
+	50% {width:100%}
+	to {width:0;background-position: 0 0;}
+}
+
+@keyframes loadingAnimate {
+	from {width:0;background-position: 200px 0;}
+	50% {width:100%}
+	to {width:0;background-position: 0 0;}
+}
+

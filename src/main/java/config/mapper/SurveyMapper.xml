@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="net.inno.modules.dao.SurveyMapper">
+<insert id="insert" parameterType="Survey"   keyProperty="surveyId" useGeneratedKeys="true">
+INSERT INTO sv_survey
+	(
+	`userId`,
+	`time`,
+	`score`,
+	`result`
+	)
+VALUES
+	(
+	#{userId},
+	#{time},
+	#{score},
+	#{result}
+	)
+</insert>
+
+<delete id="delete" parameterType="long">
+DELETE FROM sv_survey WHERE testId = #{surveyId}
+</delete>
+
+<update id="update" parameterType="Survey">
+UPDATE sv_survey SET 
+	`userId` = #{userId},
+	`time` = #{time},
+	`score` = #{score},
+	`result` = #{result} 
+WHERE 
+	surveyId = #{surveyId}
+</update>
+
+<select id="get" resultType="Survey" parameterType="long">
+	SELECT * FROM sv_survey WHERE surveyId = #{surveyId}
+</select>
+
+<select id="find" resultType="Survey" parameterType="Survey">
+	SELECT * FROM sv_survey where 1=1 
+	<if test="surveyId != -1">
+		 AND `surveyId` = #{surveyId}
+	</if>
+	<if test="userId != null">
+		 AND `userId` like #{userId}
+	</if>
+	<if test="time != null">
+		 AND `time` = #{time}
+	</if>
+	<if test="score != -1">
+		 AND `score` = #{score}
+	</if>
+	<if test="result != null">
+		 AND `result` like #{result}
+	</if>
+</select>
+
+<select id="search" resultType="Survey" parameterType="ListCondition">
+	SELECT <if test="distinct">distinct</if> * FROM sv_survey
+	<if test="_parameter != null">
+		<include refid="Where_ListCondition"/>
+	</if>
+	<if test="orderSql != null">order by ${orderSql}</if>
+</select>
+
+<select id="count" resultType="java.lang.Integer" parameterType="ListCondition">
+	SELECT count(*) FROM sv_survey
+	<if test="_parameter != null">
+		<include refid="Where_ListCondition"/>
+	</if>
+</select>
+
+<sql id="Where_ListCondition">
+	<where>
+		<foreach collection="listSql" item="value">
+			${value}
+		</foreach>
+	</where>
+</sql>
+</mapper>

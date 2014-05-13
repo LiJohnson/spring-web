@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="net.inno.modules.dao.QuestionMapper">
+<insert id="insert" parameterType="Question"   keyProperty="questionId" useGeneratedKeys="true">
+INSERT INTO sv_question
+	(
+	`parentId`,
+	`title`,
+	`type`,
+	`score`,
+	`answer`,
+	`other`,
+	`pos`
+	)
+VALUES
+	(
+	#{parentId},
+	#{title},
+	#{type},
+	#{score},
+	#{answer},
+	#{other},
+	#{pos}
+	)
+</insert>
+
+<delete id="delete" parameterType="long">
+DELETE FROM sv_question WHERE questionId = #{questionId}
+</delete>
+
+<update id="update" parameterType="Question">
+UPDATE sv_question SET 
+	`parentId` = #{parentId},
+	`title` = #{title},
+	`type` = #{type},
+	`score` = #{score},
+	`answer` = #{answer},
+	`other` = #{other},
+	`pos` = #{pos} 
+WHERE 
+	questionId = #{questionId}
+</update>
+
+<select id="get" resultType="Question" parameterType="long">
+	SELECT * FROM sv_question WHERE questionId = #{questionId}
+</select>
+
+<select id="find" resultType="Question" parameterType="Question">
+	SELECT * FROM sv_question where 1=1 
+	<if test="questionId != -1">
+		 AND `questionId` = #{questionId}
+	</if>
+	<if test="parentId != -1">
+		 AND `parentId` = #{parentId}
+	</if>
+	<if test="title != null">
+		 AND `title` like #{title}
+	</if>
+	<if test="type != null">
+		 AND `type` like #{type}
+	</if>
+	<if test="score != -1">
+		 AND `score` = #{score}
+	</if>
+	<if test="answer != null">
+		 AND `answer` like #{answer}
+	</if>
+	<if test="other != null">
+		 AND `other` like #{other}
+	</if>
+	<if test="pos != -1">
+		 AND `pos` = #{pos}
+	</if>
+</select>
+
+<select id="search" resultType="Question" parameterType="ListCondition">
+	SELECT <if test="distinct">distinct</if> * FROM sv_question
+	<if test="_parameter != null">
+		<include refid="Where_ListCondition"/>
+	</if>
+	<if test="orderSql != null">order by ${orderSql}</if>
+</select>
+
+<select id="count" resultType="java.lang.Integer" parameterType="ListCondition">
+	SELECT count(*) FROM sv_question
+	<if test="_parameter != null">
+		<include refid="Where_ListCondition"/>
+	</if>
+</select>
+
+<sql id="Where_ListCondition">
+	<where>
+		<foreach collection="listSql" item="value">
+			${value}
+		</foreach>
+	</where>
+</sql>
+</mapper>

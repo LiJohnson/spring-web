@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN" "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+    <properties>
+        <property name="dialect" value="mysql"/>
+    </properties>
+    <typeAliases>
+        <typeAlias alias="ListCondition" type ="net.inno.modules.bean.ListCondition" />
+
+    </typeAliases>
+    <plugins>
+        <plugin interceptor="net.inno.myBatisPlugin.page.plugin.StatementHandlerInterceptor">
+        </plugin>
+    </plugins>
+</configuration>

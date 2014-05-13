@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="net.inno.modules.dao.AreaMapper">
+<insert id="insert" parameterType="Area">
+INSERT INTO sys_area
+	(
+	areaId,
+	parentId,
+	`name`,
+	`key`
+	)
+VALUES
+	(
+	#{areaId},
+	#{parentId},
+	#{name},
+	#{key}
+	)
+</insert>
+
+<delete id="delete" parameterType="long">
+DELETE FROM sys_area WHERE areaId = #{areaId}
+</delete>
+
+<update id="update" parameterType="Area">
+UPDATE sys_area SET 
+	parentId = #{parentId},
+	`name` = #{name},
+	`key` = #{key} 
+WHERE 
+	areaId = #{areaId}
+</update>
+
+<select id="get" resultType="Area" parameterType="long">
+	SELECT * FROM sys_area WHERE areaId = #{areaId}
+</select>
+
+<select id="find" resultType="Area" parameterType="Area">
+	SELECT * FROM sys_area where 1=1 
+	<if test="areaId != -1">
+		 AND areaId = #{areaId}
+	</if>
+	<if test="parentId != -1">
+		 AND parentId = #{parentId}
+	</if>
+	<if test="name != null">
+		 AND `name` like #{name}
+	</if>
+	<if test="key != null">
+		 AND `key` like #{key}
+	</if>
+</select>
+
+<select id="search" resultType="Area" parameterType="ListCondition">
+	SELECT <if test="distinct">distinct</if> * FROM sys_area
+	<if test="_parameter != null">
+		<include refid="Where_ListCondition"/>
+	</if>
+	<if test="orderSql != null">order by ${orderSql}</if>
+</select>
+
+<select id="count" resultType="java.lang.Integer" parameterType="ListCondition">
+	SELECT count(*) FROM sys_area
+	<if test="_parameter != null">
+		<include refid="Where_ListCondition"/>
+	</if>
+</select>
+
+<sql id="Where_ListCondition">
+	<where>
+		<foreach collection="listSql" item="value">
+			${value}
+		</foreach>
+	</where>
+</sql>
+
+<!-- 通过父节点来找下一级的全部节点 -->
+<select id="getAreaByParentId" resultType="Area" parameterType="java.lang.Integer">
+	SELECT
+		areaId,
+		parentId,
+		`name`,
+		`key`
+	FROM
+		sys_area
+	WHERE
+		parentId = #{parentId}
+</select>
+
+</mapper>
